@@ -4,7 +4,6 @@ resource "kubernetes_namespace" "monitoring" {
   }
 }
 
-
 resource "helm_release" "monitoring" {
   name = "monitoring"
   namespace = kubernetes_namespace.monitoring.metadata[0].name
