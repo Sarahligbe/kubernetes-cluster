@@ -1,1 +1,83 @@
+name: 'Terraform code to deploy the EKS infrastructure'
+
 on:
+  push:
+    branches: 
+      - main
+    paths:
+      - infrastructure
+  pull_request:
+  
+permissions:
+  contents: read
+  
+env:  
+ # Credentials for deployment to AWS
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+# Credentials to sign into argocd and the slack api url
+  argoslack: ${{ secrets.TF_VAR_ARGOSLACK }}
+  prometheusslack: ${{ secrets.TF_VAR_PROMETHEUSSLACK }}
+  argocdpass: ${{ secrets.TF_VAR_ARGOCDPASS }}
+  
+jobs:
+  infrastructure:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infrastructure
+        
+    steps:
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v2
+        
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.2
+          
+      - name: Deploy S3 backend
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd ../s3-backend
+          terraform init
+          terraform apply -auto-approve
+      - name: Install AWS CLI
+        run: |
+          cd ..
+          sudo apt-get update &&
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&
+          unzip awscliv2.zip &&
+          sudo ./aws/install
+      - name: Install kubectl
+        run: |
+          cd ..
+          sudo apt-get update &&
+          sudo apt-get install -y ca-certificates curl &&
+          sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg &&
+          echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list &&
+          sudo apt-get update &&
+          sudo apt-get install -y kubectl
+
+      - name: Terraform init
+        id: init
+        run: terraform init 
+        
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -var="argocdpass=${{ secrets.TF_VAR_argocdpass }}" -var="argoslack=${{ secrets.TF_VAR_argoslack }}" -var="prometheusslack=${{ secrets.TF_VAR_prometheusslack }}" -input=false
+      
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+      
+      - name: Terraform apply
+        id: apply
+        run: terraform apply -var="argocdpass=${{ secrets.TF_VAR_argocdpass }}" -var="argoslack=${{ secrets.TF_VAR_argoslack }}" -var="prometheusslack=${{ secrets.TF_VAR_prometheusslack }}" -auto-approve -input=false
+      
+   
+        
