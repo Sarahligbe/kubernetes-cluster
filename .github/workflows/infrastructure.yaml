@@ -35,7 +35,7 @@ jobs:
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.2
+          terraform_version: 1.4.0
           
       - name: Deploy S3 backend
         env:
