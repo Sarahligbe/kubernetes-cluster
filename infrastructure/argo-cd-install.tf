@@ -12,7 +12,7 @@ resource "helm_release" "argocd-helm" {
   chart = "argo-cd"
   timeout = 1000
 
-  values = [templatefile("argo-cd-values.yaml", {slack = "${var.argoslack}", domain = "${var.argocd-domain}", argopass = "${var.argopass}"})]
+  values = [templatefile("argo-cd-values.yaml", {slack = "${var.argoslack}", domain = "${var.argocd-domain}", argocdpass = "${var.argocdpass}"})]
 
   depends_on = [module.eks, helm_release.ingress, kubernetes_namespace.argo-cd]
 }
