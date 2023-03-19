@@ -2,7 +2,7 @@
 configs:
   secret:
   #This is bcrypt hashed
-    argocdServerAdminPassword: "${argopass}"
+    argocdServerAdminPassword: "${argocdpass}"
 notifications:
   argocdURL: "${domain}"
   secret:
