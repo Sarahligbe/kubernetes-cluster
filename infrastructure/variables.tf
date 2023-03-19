@@ -99,7 +99,7 @@ variable "prometheusslack" {
   type = string
 }
 
-variable "argopass" {
+variable "argocdpass" {
   description = "argocd password"
   type = string
 }
