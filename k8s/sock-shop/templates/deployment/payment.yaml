@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.payment.paymentLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.payment.paymentLabel }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.payment.paymentLabel }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.payment.paymentLabel }}
+    spec:
+      containers:
+      - name: {{ .Values.payment.paymentLabel }}
+        image: "{{ .Values.payment.image.repo }}:{{ .Values.payment.image.tag }}"
+        command:
+        - /app
+        - -decline={{ .Values.payment.declinePaymentsOverAmount }}
+        resources:
+{{ toYaml .Values.payment.resources | indent 10 }}
+        ports:
+        - containerPort: {{ .Values.payment.containerPort }}
+        env:
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+{{- if lt (int .Values.payment.containerPort) 1024 }}
+          capabilities:
+            drop:
+              - all
+            add:
+              - NET_BIND_SERVICE
+{{- end }}
+          readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.payment.containerPort }}
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.payment.containerPort }}
+          initialDelaySeconds: 180
+          periodSeconds: 3

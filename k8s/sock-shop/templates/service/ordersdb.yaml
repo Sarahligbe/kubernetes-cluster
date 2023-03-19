@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.ordersdb.ordersDbLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.ordersdb.ordersDbLabel }}
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 27017
+    name: {{ .Values.ordersdb.ordersDbLabel }}
+    targetPort: 27017
+  selector:
+    name: {{ .Values.ordersdb.ordersDbLabel }}

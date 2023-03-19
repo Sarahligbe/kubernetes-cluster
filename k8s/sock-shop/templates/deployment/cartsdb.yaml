@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carts-db
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.cartsDbLabel }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.cartsdb.cartsDbLabel }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.cartsdb.cartsDbLabel }}
+    spec:
+      containers:
+      - name: {{ .Values.cartsdb.cartsDbLabel }}
+        image: "{{ .Values.cartsdb.image.repo }}:{{ .Values.cartsdb.image.tag }}"
+        ports:
+        - name: mongo
+          containerPort: 27017
+        resources:
+{{ toYaml .Values.cartsdb.resources | indent 10 }}
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory

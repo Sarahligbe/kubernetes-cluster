@@ -1,0 +1,36 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: multi-tenancy
+  namespace: argocd
+spec: 
+  generators: 
+    - git: 
+        repoURL: https://github.com/Sarahligbe/kubernetes-cluster.git
+        revision: HEAD
+        directories: 
+          - path: k8s/s*
+  template: 
+    metadata: 
+      name: '{{path.basename}}'
+      annotations: 
+        notifications.argoproj.io/subscribe.on-sync-succeeded.slack: argocd-build
+        notifications.argoproj.io/subscribe.on-sync-failed.slack: argocd-build
+        notifications.argoproj.io/subscribe.on-health-degraded: argocd-build
+        notifications.argoproj.io/subscribe.on-deployed.slack: argocd-build
+    spec: 
+      project: multi-tenancy
+      source: 
+        repoURL: https://github.com/Sarahligbe/kubernetes-cluster.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination: 
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy: 
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

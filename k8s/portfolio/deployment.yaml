@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio
+  labels:
+    app: portfolio
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: portfolio
+  template:
+    metadata:
+      labels:
+        app: portfolio
+    spec:
+      containers:
+        - name: portfolio-container
+          image: sayaligbe/portfolio:1.0
+          ports:
+            - containerPort: 80

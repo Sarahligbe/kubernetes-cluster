@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.queuemaster.queuemasterLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.queuemaster.queuemasterLabel }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    app: kube-prometheus-stack-operator
+    release: "monitoring"
+    
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 80
+    name: {{ .Values.queuemaster.queuemasterLabel }}
+    targetPort: 80
+  selector:
+    name: {{ .Values.queuemaster.queuemasterLabel }}
+

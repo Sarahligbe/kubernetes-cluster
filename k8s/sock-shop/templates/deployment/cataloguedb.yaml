@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.cataloguedb.catalogueDbLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.cataloguedb.catalogueDbLabel }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.cataloguedb.catalogueDbLabel }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.cataloguedb.catalogueDbLabel }}
+    spec:
+      containers:
+      - name: {{ .Values.cataloguedb.catalogueDbLabel }}
+        image: "{{ .Values.cataloguedb.image.repo }}:{{ .Values.cataloguedb.image.tag }}"
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: fake_password
+          - name: MYSQL_DATABASE
+            value: socksdb
+        ports:
+        - name: mysql
+          containerPort: 3306
+        resources:
+{{ toYaml .Values.cataloguedb.resources | indent 10 }}
+

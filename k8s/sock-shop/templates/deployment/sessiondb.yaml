@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.sessiondb.sessionDbLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.sessiondb.sessionDbLabel }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: {{ .Values.sessiondb.sessionDbLabel }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.sessiondb.sessionDbLabel }}
+    spec:
+      containers:
+      - name: {{ .Values.sessiondb.sessionDbLabel }}
+        image: "{{ .Values.sessiondb.image.repo }}:{{ .Values.sessiondb.image.tag }}"
+        ports:
+        - name: redis
+          containerPort: 6379
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+          readOnlyRootFilesystem: true
+        resources:
+{{ toYaml .Values.sessiondb.resources | indent 10 }}

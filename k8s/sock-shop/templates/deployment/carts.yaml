@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.carts.cartsLabel }}
+  labels:
+    name: {{ .Values.carts.cartsLabel }}
+    #namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.carts.cartsLabel }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.carts.cartsLabel }}
+    spec:
+      containers:
+      - name: {{ .Values.carts.cartsLabel }}
+        image: "{{ .Values.carts.image.repo }}:{{ .Values.carts.image.tag }}"
+        env:
+         - name: JAVA_OPTS
+           value: -Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
+        resources:
+{{ toYaml .Values.carts.resources | indent 10 }}
+        ports:
+        - containerPort: {{ .Values.carts.containerPort }}
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+              - all
+            add:
+              - NET_BIND_SERVICE
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory

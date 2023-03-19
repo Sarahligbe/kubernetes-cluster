@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.user.userLabel }}
+  labels:
+    name: {{ .Values.user.userLabel }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    app: kube-prometheus-stack-operator
+    release: "monitoring"
+spec:
+  ports:
+  - port: 80
+    name: {{ .Values.user.userLabel }}
+    targetPort: {{ .Values.user.containerPort }}
+  selector:
+    name: {{ .Values.user.userLabel }}
+

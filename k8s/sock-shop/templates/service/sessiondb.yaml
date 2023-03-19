@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.sessiondb.sessionDbLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.sessiondb.sessionDbLabel }}
+spec:
+  ports:
+  - port: 6379
+    name: {{ .Values.sessiondb.sessionDbLabel }}
+    targetPort: 6379
+  selector:
+    name: {{ .Values.sessiondb.sessionDbLabel }}

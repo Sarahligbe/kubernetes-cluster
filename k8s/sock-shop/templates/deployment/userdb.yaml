@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.userdb.userdbLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.userdb.userdbLabel }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.userdb.userdbLabel }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.userdb.userdbLabel }}
+    spec:
+      containers:
+      - name: {{ .Values.userdb.userdbLabel }}
+        image: "{{ .Values.userdb.image.repo }}:{{ .Values.userdb.image.tag }}"
+        ports:
+        - name: mongo
+          containerPort: 27017
+        resources:
+{{ toYaml .Values.userdb.resources | indent 10 }}
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory

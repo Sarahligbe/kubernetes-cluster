@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.userdb.userdbLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.userdb.userdbLabel }}
+spec:
+  ports:
+    # the port that this service should serve on
+  - port: 27017
+    targetPort: 27017
+  selector:
+    name: {{ .Values.userdb.userdbLabel }}

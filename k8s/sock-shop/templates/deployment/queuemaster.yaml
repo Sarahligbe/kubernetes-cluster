@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.queuemaster.queuemasterLabel }}
+  #namespace: {{ .Values.namespace }}
+  labels:
+    name: {{ .Values.queuemaster.queuemasterLabel }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      name: {{ .Values.queuemaster.queuemasterLabel }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.queuemaster.queuemasterLabel }}
+    spec:
+      containers:
+      - name: {{ .Values.queuemaster.queuemasterLabel }}
+        image: "{{ .Values.queuemaster.image.repo }}:{{ .Values.queuemaster.image.tag }}"
+        env:
+         - name: JAVA_OPTS
+           value: {{ .Values.java.options }}
+        resources:
+{{ toYaml .Values.queuemaster.resources | indent 10 }}
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
