@@ -32,8 +32,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
-  alias = "virginia"
+  region = "us-east-1"
 }
 
 provider "helm" {
