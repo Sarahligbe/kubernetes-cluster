@@ -13,6 +13,7 @@ jobs:
  # Credentials for deployment to AWS
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 # Credentials to sign into argocd and the slack api url
       argoslack: ${{ secrets.TF_VAR_ARGOSLACK }}
       prometheusslack: ${{ secrets.TF_VAR_PROMETHEUSSLACK }}
