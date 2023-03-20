@@ -1,0 +1,38 @@
+name: 'Terraform delete'
+on: 
+  workflow_dispatch:
+jobs:
+  destroy_infra:
+    env:  
+ # Credentials for deployment to AWS
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+# Credentials to sign into argocd and the slack api url
+      argoslack: ${{ secrets.TF_VAR_ARGOSLACK }}
+      prometheusslack: ${{ secrets.TF_VAR_PROMETHEUSSLACK }}
+      argocdpass: ${{ secrets.TF_VAR_ARGOCDPASS }}
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infrastructure
+        
+    steps:
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v3
+        
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.0
+
+      - name: Terraform init
+        id: init
+        run: terraform init 
+
+      - name: Terraform destroy
+        id: destroy
+        run: terraform destroy -var="argocdpass=${{ secrets.TF_VAR_argocdpass }}" -var="argoslack=${{ secrets.TF_VAR_argoslack }}" -var="prometheusslack=${{ secrets.TF_VAR_prometheusslack }}" -auto-approve -input=false
+        
