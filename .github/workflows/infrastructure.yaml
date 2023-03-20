@@ -60,8 +60,10 @@ jobs:
         id: apply
         run: terraform apply -var="argocdpass=${{ secrets.TF_VAR_argocdpass }}" -var="argoslack=${{ secrets.TF_VAR_argoslack }}" -var="prometheusslack=${{ secrets.TF_VAR_prometheusslack }}" -auto-approve -input=false
       
-      - name: Terraform destroy
-        id: destroy
-        run: terraform destroy -var="argocdpass=${{ secrets.TF_VAR_argocdpass }}" -var="argoslack=${{ secrets.TF_VAR_argoslack }}" -var="prometheusslack=${{ secrets.TF_VAR_prometheusslack }}" -auto-approve -input=false
+      - name: Archive loadbalancer hostname file
+        uses: actions/upload-artifact@v3
+        with:
+          name: loadbalancer
+          path: ./nlb_hostname.txt
    
         

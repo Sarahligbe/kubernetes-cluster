@@ -30,8 +30,8 @@ intra_subnet_blocks = {
     az = "us-east-1b"
   }
 }
-domain = "sarahaligbe.me"
+domain = "sarahligbe.live"
 email = "sarahligbe12@gmail.com"
-argocd-domain = "argocd.sarahaligbe.me"
-grafana_domain = "graf.sarahaligbe.me"
-prom_domain = "prom.sarahaligbe.me"
+argocd-domain = "argocd.sarahligbe.live"
+grafana_domain = "graf.sarahligbe.live"
+prom_domain = "prom.sarahligbe.live"

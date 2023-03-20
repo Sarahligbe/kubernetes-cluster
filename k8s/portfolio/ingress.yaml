@@ -10,10 +10,10 @@ spec:
   ingressClassName: nginx
   tls: 
     - hosts: 
-        - "*.sarahaligbe.me"
+        - "*.sarahligbe.live"
       secretName: wildcard-cert
   rules:
-    - host: "portfolio.sarahaligbe.me"
+    - host: "portfolio.sarahligbe.live"
       http:
         paths:
           - path: /
