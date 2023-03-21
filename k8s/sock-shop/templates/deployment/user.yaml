@@ -24,7 +24,7 @@ spec:
         ports:
         - containerPort: {{ .Values.user.containerPort }}
         env:
-        - name: MONGO_HOST
+        - name: mongo
           value: user-db:27017
         securityContext:
           runAsNonRoot: true
@@ -37,7 +37,7 @@ spec:
           readOnlyRootFilesystem: true
         livenessProbe:
           tcpSocket:
-            port: 8080
+            port: 80
           initialDelaySeconds: 300
           periodSeconds: 3
         readinessProbe:
