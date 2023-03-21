@@ -2,18 +2,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.user.userLabel }}
-  labels:
-    name: {{ .Values.user.userLabel }}
+  name: user
   annotations:
     prometheus.io/scrape: 'true'
     app: kube-prometheus-stack-operator
     release: "monitoring"
+  labels:
+    name: user
+  namespace: sock-shop
 spec:
   ports:
+    # the port that this service should serve on
   - port: 80
-    name: {{ .Values.user.userLabel }}
-    targetPort: {{ .Values.user.containerPort }}
+    targetPort: 80
   selector:
-    name: {{ .Values.user.userLabel }}
+    name: user
 
