@@ -10,7 +10,7 @@ spec:
         repoURL: https://github.com/Sarahligbe/kubernetes-cluster.git
         revision: HEAD
         directories: 
-          - path: k8s/s*
+          - path: k8s/*
   template: 
     metadata: 
       name: '{{path.basename}}'
