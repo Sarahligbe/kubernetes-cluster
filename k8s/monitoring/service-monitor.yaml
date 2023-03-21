@@ -3,14 +3,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: front-end
-  namespace: monitoring
+  namespace: sock-shop
   labels:
     release: "monitoring"
     name: front-end
 spec:
   endpoints:
   - path: /metrics
-    port: front-end
+    port: metrics
   namespaceSelector:
     matchNames:
     - sock-shop
