@@ -1,6 +1,6 @@
 # Local .terraform directories
 **/.terraform/*
-sock-shop
+sock-shop-bac
 
 # .tfstate files
 *.tfstate
