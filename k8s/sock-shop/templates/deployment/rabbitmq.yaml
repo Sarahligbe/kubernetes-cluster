@@ -20,6 +20,8 @@ spec:
       - name: {{ .Values.rabbitmq.rabbitmqLabel }}
         image: "{{ .Values.rabbitmq.image.repo }}:{{ .Values.rabbitmq.image.tag }}"
         ports:
+        - containerPort: 15672
+          name: management
         - containerPort: 5672
         resources:
 {{ toYaml .Values.rabbitmq.resources | indent 10 }}
@@ -33,3 +35,8 @@ spec:
               - SETUID
               - DAC_OVERRIDE
           readOnlyRootFilesystem: true
+      - name: rabbitmq-exporter
+        image: kbudde/rabbitmq-exporter
+        ports:
+        - containerPort: 9090
+          name: exporter

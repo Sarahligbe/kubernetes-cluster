@@ -15,6 +15,8 @@ spec:
     metadata:
       labels:
         name: {{ .Values.sessiondb.sessionDbLabel }}
+      annotations:
+        prometheus.io.scrape: "false"
     spec:
       containers:
       - name: {{ .Values.sessiondb.sessionDbLabel }}
@@ -31,5 +33,4 @@ spec:
               - SETGID
               - SETUID
           readOnlyRootFilesystem: true
-        resources:
-{{ toYaml .Values.sessiondb.resources | indent 10 }}
+

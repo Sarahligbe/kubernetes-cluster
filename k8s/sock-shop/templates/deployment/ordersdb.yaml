@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.ordersdb.ordersDbLabel }}
-        image: "{{ .Values.ordersdb.image.repo }}:{{ .Values.ordersdb.image.tag }}"
+        image: "{{ .Values.ordersdb.image.repo }}"
         ports:
         - name: mongo
           containerPort: 27017

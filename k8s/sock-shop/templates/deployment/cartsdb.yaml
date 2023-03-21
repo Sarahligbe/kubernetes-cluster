@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.cartsdb.cartsDbLabel }}
-        image: "{{ .Values.cartsdb.image.repo }}:{{ .Values.cartsdb.image.tag }}"
+        image: "{{ .Values.cartsdb.image.repo }}"
         ports:
         - name: mongo
           containerPort: 27017

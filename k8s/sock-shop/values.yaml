@@ -27,7 +27,6 @@ cartsdb:
   cartsDbLabel: cartsdb
   image:
     repo: mongo
-    tag: 4.4.0
   resources:
     limits:
       cpu: 500m
@@ -95,7 +94,6 @@ ordersdb:
   ordersDbLabel: ordersdb
   image:
     repo: mongo
-    tag: 4.4.0
   resources:
     limits:
       cpu: 500m
@@ -106,7 +104,7 @@ ordersdb:
 
 payment:
   paymentLabel: payment
-  containerPort: 8080
+  containerPort: 80
   declinePaymentsOverAmount: 200
   image:
     repo: weaveworksdemos/payment
@@ -136,7 +134,7 @@ rabbitmq:
   rabbitmqLabel: rabbitmq
   image:
     repo: rabbitmq
-    tag: 3.6.8
+    tag: 3.6.8-management
   resources:
     limits:
       cpu: 1
@@ -190,7 +188,7 @@ userdb:
   userdbLabel: user-db
   image:
     repo: weaveworksdemos/user-db
-    tag: 0.4.0
+    tag: 0.3.0
   resources:
     limits:
       cpu: 300m
