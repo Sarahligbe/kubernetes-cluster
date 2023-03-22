@@ -10,8 +10,8 @@ spec:
   ingressClassName: nginx
   tls: 
     - hosts: 
-        - "*.sarahligbe.live"
-      secretName: wildcard-cert
+        - "sock.sarahligbe.live"
+#      secretName: wildcard-cert
   rules:
     - host: "sock.sarahligbe.live"
       http:

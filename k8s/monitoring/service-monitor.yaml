@@ -3,7 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: front-end
-  namespace: sock-shop
+  namespace: monitoring
   labels:
     release: "monitoring"
     name: front-end
@@ -32,7 +32,7 @@ metadata:
 spec:
   endpoints:
   - path: /metrics
-    port: carts
+    port: metrics
   namespaceSelector:
     matchNames:
     - sock-shop
@@ -54,7 +54,7 @@ metadata:
 spec:
   endpoints:
   - path: /metrics
-    port: catalogue
+    port: metrics
   namespaceSelector:
     matchNames:
     - sock-shop
@@ -76,7 +76,7 @@ metadata:
 spec:
   endpoints:
   - path: /metrics
-    port: orders
+    port: metrics
   namespaceSelector:
     matchNames:
     - sock-shop
@@ -98,7 +98,7 @@ metadata:
 spec:
   endpoints:
   - path: /metrics
-    port: payment
+    port: metrics
   namespaceSelector:
     matchNames:
     - sock-shop
@@ -120,7 +120,7 @@ metadata:
 spec:
   endpoints:
   - path: /metrics
-    port: shipping
+    port: metrics
   namespaceSelector:
     matchNames:
     - sock-shop
@@ -142,7 +142,7 @@ metadata:
 spec:
   endpoints:
   - path: /metrics
-    port: user
+    port: metrics
   namespaceSelector:
     matchNames:
     - sock-shop
