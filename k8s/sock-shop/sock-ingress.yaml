@@ -11,7 +11,7 @@ spec:
   tls: 
     - hosts: 
         - "sock.sarahligbe.live"
-#      secretName: wildcard-cert
+      secretName: sock-cert
   rules:
     - host: "sock.sarahligbe.live"
       http:
