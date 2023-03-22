@@ -5,7 +5,6 @@ metadata:
   name: front-end
   namespace: monitoring
   labels:
-    release: "monitoring"
     name: front-end
 spec:
   endpoints:
@@ -17,8 +16,6 @@ spec:
   selector:
     matchLabels:
       name: front-end
-      app: kube-prometheus-stack-operator
-      release: "monitoring"
 
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -27,8 +24,7 @@ metadata:
   name: carts
   namespace: monitoring
   labels:
-    release: "monitoring"
-    app: nodeapp
+    name: carts
 spec:
   endpoints:
   - path: /metrics
@@ -39,8 +35,6 @@ spec:
   selector:
     matchLabels:
       name: carts
-      app: kube-prometheus-stack-operator
-      release: "monitoring"
 
 ---
 apiVersion: monitoring.coreos.com/v1
