@@ -19,22 +19,30 @@ export TF_VAR_argopass=$(htpasswd -nbBC 10 "" $PASS | tr -d ':\n' | sed 's/$2y/$
 ```
 You can also set these variables in Github Actions secrets.
 
+## Live links
 My sock-shop is hosted on [sock.sarahligbe.live](https://sock.sarahligbe.live)  
 My portfolio is hosted on [portfolio.sarahligbe.live](https://portfolio.sarahligbe.live)  
-ArgoCD is hosted on [argocd.sarahligbe.live](https://argocd.sarahligbe.live)  (**username = admin**)
-Grafana is hosted on [graf.sarahligbe.live](https://graf.sarahligbe.live)  (**username = admin**)
+ArgoCD is hosted on [argocd.sarahligbe.live](https://argocd.sarahligbe.live)  (**username = admin**)  
+Grafana is hosted on [graf.sarahligbe.live](https://graf.sarahligbe.live)  (**username = admin**) 
 Prometheus is hosted on [prom.sarahligbe.live](https://prom.sarahligbe.live)
 
+## Project details
 For this project, I set up:
 - A VPC with public, private and intra subnets. The intra subnets were to be assigned to the Control plane, while the Worker nodes were in the private subnet.
 - Karpenter for autoscaling
 - Cert manager and Let's Encrypt for SSL
 - Nginx ingress to route traffic from the pods to the internet
 - Prometheus and Grafana for monitoring
-- AWS Cloudwatch for logging
+- Loki for logging
 - Github Actions for CI
 - ArgoCD for continuous deployment of the applications in the kubernetes cluster.  
 
+## Directory details
+1. The Infrastructure directory contains the terraform script to set up the EKS cluster and install cert-manager, nginx ingress controller, karpenter, prometheus, grafana, and loki. Github actions does the CI and sets this directory up.
+2. The K8s directory contains the applications - the sockshop microservice app and the portfolio app. It also contains the grafana dashboard for to monitor the sockshop performance. ArgoCD does the CD and sets this directory up. 
+I used the ArgoCD Application set to set up the CD since I was deploying more than one application.
+
+## Project screenshots
 The ArgoCD deployment:
 ![Argocd deployments](images/argo-cd.jpg)  
 
@@ -51,8 +59,16 @@ Prometheus:
 ![prometheus](images/prom.jpg)    
 ![prometheus](images/prom2.jpg)  
 
+Grafana datasources:
+![datasources](images/datasources.jpg)
+
 Grafana dashboard:
 ![grafana](images/graf.jpg)  
+![grafana-sock](images/dashboard.jpg)  
+
+Loki logs:
+![loki](images/loki1.jpg)  
+![loki2](images/loki2.jpg)
 
 Let's Encrypt certificate (got a wildcard certificate to cover all the subdomains)  
 ![cert](images/cert.jpg)
