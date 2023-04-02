@@ -47,3 +47,11 @@ jobs:
       - name: Terraform state list
         id: state
         run: terraform state list
+
+      - name: Terraform state rm
+        id: state
+        run: terraform state rm kubernetes_namespace.argo-cd
+
+      - name: Terraform Destroy
+        id: Destroy
+        run: terraform destroy -var="argocdpass=${{ secrets.TF_VAR_argocdpass }}" -var="argoslack=${{ secrets.TF_VAR_argoslack }}" -var="prometheusslack=${{ secrets.TF_VAR_prometheusslack }}" -auto-approve -input=false
