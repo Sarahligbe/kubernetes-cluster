@@ -49,7 +49,7 @@ jobs:
         run: terraform state list
 
       - name: Terraform state rm
-        id: state
+        id: remove
         run: terraform state rm kubernetes_namespace.argo-cd
 
       - name: Terraform Destroy
