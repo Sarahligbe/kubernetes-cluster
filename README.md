@@ -24,7 +24,9 @@ My sock-shop is hosted on [sock.sarahligbe.live](https://sock.sarahligbe.live)
 My portfolio is hosted on [portfolio.sarahligbe.live](https://portfolio.sarahligbe.live)  
 ArgoCD is hosted on [argocd.sarahligbe.live](https://argocd.sarahligbe.live)  (**username = admin**)  
 Grafana is hosted on [graf.sarahligbe.live](https://graf.sarahligbe.live)  (**username = admin**) 
-Prometheus is hosted on [prom.sarahligbe.live](https://prom.sarahligbe.live)
+Prometheus is hosted on [prom.sarahligbe.live](https://prom.sarahligbe.live)  
+
+The links no longer work. I destroyed the infrastructure
 
 ## Project details
 For this project, I set up:
@@ -38,7 +40,10 @@ For this project, I set up:
 - ArgoCD for continuous deployment of the applications in the kubernetes cluster.  
 
 ## Directory details
-1. The Infrastructure directory contains the terraform script to set up the EKS cluster and install cert-manager, nginx ingress controller, karpenter, prometheus, grafana, and loki. Github actions does the CI and sets this directory up.
+1. The Infrastructure directory contains the terraform script to set up the EKS cluster and install cert-manager, nginx ingress controller, karpenter, prometheus, grafana, and loki. Github actions does the CI and sets this directory up. 
+
+You can delete the backend in the providers.tf file to run it locally or use your own s3 backend.
+
 2. The K8s directory contains the applications - the sockshop microservice app and the portfolio app. It also contains the grafana dashboard for to monitor the sockshop performance. ArgoCD does the CD and sets this directory up. 
 I used the ArgoCD Application set to set up the CD since I was deploying more than one application.
 
@@ -74,4 +79,31 @@ Let's Encrypt certificate (got a wildcard certificate to cover all the subdomain
 ![cert](images/cert.jpg)
 
 Github actions workflow:
-![git_actions](images/git_actions.jpg)
+![git_actions](images/git_actions.jpg)  
+
+
+### Additional project screenshots from the AWS Console
+The EKS Cluster:  
+![eks](images/eks_cluster.jpg)  
+
+EKS nodes:  
+![eks nodes](images/eks_nodes.jpg)  
+There is an additional instance that was created by karpenter  
+
+EKS VPC:  
+![eks vpc](images/vpc.jpg)  
+![eks vpc resource map](images/vpc_resources.jpg)  
+
+EKS Security groups:  
+![eks security groups](images/sg.jpg)  
+
+Route53:  
+![route53 cname record](images/route53.jpg)  
+
+Network Load Balancer:
+![nlb](images/nlb.jpg)  
+
+Terraform apply output:  
+![terraform apply](images/terraform_apply.jpg)
+
+
