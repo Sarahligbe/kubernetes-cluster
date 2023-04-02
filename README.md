@@ -1,9 +1,10 @@
 # Deploying a Kubernetes cluster with Terraform, a CI/CD pipeline with Github actions and ArgoCD, and monitoring set up.
 
 To replicate this locally, clone the repo and do the following:
-1. Set your AWS credentials as environment variables
-2. Make sure you already have a route53 hosted zone, add your domain name in the terraform.tfvars file
-3. Set the following terraform environment variables:
+1. Set up an IAM user with Administrator privileges
+2. Set your AWS credentials as environment variables
+3. Make sure you already have a route53 hosted zone, add your domain name and subdomain names in the terraform.tfvars file
+4. Set the following terraform environment variables:
 - The slack api url for argocd to send build information
 ```bash
 export TF_VAR_argoslack=""
