@@ -1,0 +1,1 @@
+curl --insecure -fL https://192.168.56.4/system-agent-install.sh | sudo  sh -s - --server https://192.168.56.4 --label 'cattle.io/os=linux' --token 262vdvvnj555qcljdqw8kjbkbkt4l2rgvfxsvnk5xmsgc7ddz4dxsw --ca-checksum 6b5567c5842f6840c925f49a31a3f46b39d8be29d6e4085dcf7870a2e7e43b15 --etcd --controlplane --worker
