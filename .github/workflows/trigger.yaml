@@ -15,4 +15,4 @@ jobs:
         echo ${{ github.event.client_payload.unique_id }}
     - name: Install kubectl
       run: |
-        sleep 400
+        sleep 300
