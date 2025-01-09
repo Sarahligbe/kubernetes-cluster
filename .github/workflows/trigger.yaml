@@ -9,6 +9,9 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     steps:
+    steps:
+    - name: Log Unique ID
+      run: echo "Unique ID: ${{ github.event.client_payload.unique_id }}"
     - name: Install kubectl
       run: |
-        sleep 300
+        sleep 400
