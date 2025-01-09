@@ -1,4 +1,4 @@
-name: Cypress Tests - ${{ github.event.client_payload.run_id }}
+name: Cypress Tests 
 on:
   workflow_dispatch:
   repository_dispatch:
@@ -11,7 +11,8 @@ jobs:
     steps:
     steps:
     - name: Log Unique ID
-      run: echo "Unique ID: ${{ github.event.client_payload.unique_id }}"
+      run: |
+        echo "Unique ID: ${{ github.event.client_payload.unique_id }}"
     - name: Install kubectl
       run: |
         sleep 400
