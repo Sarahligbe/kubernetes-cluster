@@ -1,8 +1,5 @@
 name: Cypress Tests
 on:
-  schedule:
-    # runs tests every day at 4am
-    - cron: '0 4 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [run-cypress-tests]
@@ -14,4 +11,4 @@ jobs:
     steps:
     - name: Install kubectl
       run: |
-        sleep 2100
+        sleep 300
