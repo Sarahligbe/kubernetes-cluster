@@ -9,7 +9,6 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     steps:
-    steps:
     - name: Log Unique ID ${{ github.event.client_payload.unique_id }}
       run: |
         echo ${{ github.event.client_payload.unique_id }}
