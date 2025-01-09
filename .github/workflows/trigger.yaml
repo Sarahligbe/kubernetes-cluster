@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     steps:
-    - name: Log Unique ID
+    - name: Log Unique ID ${{ github.event.client_payload.unique_id }}
       run: |
-        echo "Unique ID: ${{ github.event.client_payload.unique_id }}"
+        echo ${{ github.event.client_payload.unique_id }}
     - name: Install kubectl
       run: |
         sleep 400
