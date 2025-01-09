@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Cypress Tests - ${{ github.event.client_payload.run_id }}
 on:
   workflow_dispatch:
   repository_dispatch:
