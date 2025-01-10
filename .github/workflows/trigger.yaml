@@ -5,13 +5,17 @@ on:
     types: [run-cypress-tests]
 
 jobs:
-  infrastructure:
-    name: 'Terraform'
+  unique:
+    name: Get unique ID from repository dispatch
     runs-on: ubuntu-latest
     steps:
     - name: Log Unique ID ${{ github.event.client_payload.unique_id }}
       run: |
         echo ${{ github.event.client_payload.unique_id }}
+  infrastructure:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    steps:
     - name: Install kubectl
       run: |
         sleep 300
